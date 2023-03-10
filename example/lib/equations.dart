@@ -19,7 +19,7 @@ const equations = [
   \nabla\cdot\vec{D} = \rho \\
   \nabla\cdot\vec{B} = 0 \\
   \nabla\times\vec{E} = -\frac{\partial\vec{B}}{\partial t} \\
-  \nabla\times\vec{H} = \vec{J}_f + \frac{\partial\vec{D}}{\partial t} 
+  \nabla\times\vec{H} = \vec{J}_f + \frac{\partial\vec{D}}{\partial t}
 \end{array}\right.'''
   ],
 ];
