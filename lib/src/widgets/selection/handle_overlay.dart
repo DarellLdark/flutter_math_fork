@@ -1,10 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 import 'overlay.dart';
 import 'overlay_manager.dart';
@@ -57,7 +54,7 @@ class _MathSelectionHandleOverlayState extends State<MathSelectionHandleOverlay>
     super.initState();
 
     _controller = AnimationController(
-        duration: TextSelectionOverlay.fadeDuration, vsync: this);
+        duration: SelectionOverlay.fadeDuration, vsync: this);
 
     _controller.forward();
   }
@@ -171,35 +168,12 @@ class _MathSelectionHandleOverlayState extends State<MathSelectionHandleOverlay>
       math.max((interactiveRect.width - handleRect.width) / 2, 0),
       math.max((interactiveRect.height - handleRect.height) / 2, 0),
     );
-    Widget child;
-    // This is a workaround for the improperly handled breaking change at https://github.com/flutter/flutter/pull/83639#discussion_r653426749.
-    if (widget.selectionControls.buildHandle is Widget Function(
-        BuildContext context,
-        TextSelectionHandleType type,
-        double textLineHeight,
-        VoidCallback? onTap)) {
-      child = (widget.selectionControls.buildHandle as Widget Function(
-        BuildContext context,
-        TextSelectionHandleType type,
-        double textLineHeight,
-        VoidCallback? onTap,
-      ))(
-        context,
-        type,
-        widget.manager.preferredLineHeight,
-        null,
-      );
-    } else {
-      child = (widget.selectionControls.buildHandle as Widget Function(
-        BuildContext context,
-        TextSelectionHandleType type,
-        double textLineHeight,
-      ))(
-        context,
-        type,
-        widget.manager.preferredLineHeight,
-      );
-    }
+    final child = (widget.selectionControls.buildHandle)(
+      context,
+      type,
+      widget.manager.preferredLineHeight,
+      null,
+    );
 
     return CompositedTransformFollower(
       link: layerLink,

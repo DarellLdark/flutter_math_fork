@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:tuple/tuple.dart';
 
 import '../ast/options.dart';
 import '../ast/style.dart';
@@ -518,7 +514,7 @@ class InternalSelectableMathState extends State<InternalSelectableMath>
                 ),
               ),
               Provider.value(
-                value: Tuple2(startHandleLayerLink, endHandleLayerLink),
+                value: (startHandleLayerLink, endHandleLayerLink),
               ),
               // We can't just provide an AnimationController, otherwise
               // Provider will throw
@@ -603,7 +599,7 @@ class SelectionStyle {
   }
 
   @override
-  int get hashCode => hashValues(
+  int get hashCode => Object.hash(
         cursorColor,
         cursorOffset,
         cursorRadius,

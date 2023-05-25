@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -398,8 +396,11 @@ class FontOptions {
   }
 
   @override
-  int get hashCode =>
-      hashValues(fontFamily.hashCode, fontWeight.hashCode, fontShape.hashCode);
+  int get hashCode => Object.hash(
+        fontFamily.hashCode,
+        fontWeight.hashCode,
+        fontShape.hashCode,
+      );
 }
 
 /// Difference between the current [FontOptions] and the desired [FontOptions].
@@ -432,6 +433,9 @@ class PartialFontOptions {
   }
 
   @override
-  int get hashCode =>
-      hashValues(fontFamily.hashCode, fontWeight.hashCode, fontShape.hashCode);
+  int get hashCode => Object.hash(
+        fontFamily.hashCode,
+        fontWeight.hashCode,
+        fontShape.hashCode,
+      );
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -25,16 +24,11 @@ class MathSelectionOverlay {
     this.clipboardStatus,
   }) : _handlesVisible = handlesVisible {
     final overlay = Overlay.of(context, rootOverlay: true);
-    assert(
-      overlay != null,
-      'No Overlay widget exists above $context.\n'
-      'Usually the Navigator created by WidgetsApp provides the overlay. '
-      'Perhaps your '
-      'app content was created above the Navigator with the WidgetsApp '
-      'builder parameter.',
+
+    _toolbarController = AnimationController(
+      duration: fadeDuration,
+      vsync: overlay,
     );
-    _toolbarController =
-        AnimationController(duration: fadeDuration, vsync: overlay!);
   }
 
   /// The context in which the selection handles should appear.
@@ -158,8 +152,11 @@ class MathSelectionOverlay {
               _buildHandle(context, MathSelectionHandlePosition.end)),
     ];
 
-    Overlay.of(context, rootOverlay: true, debugRequiredFor: debugRequiredFor)!
-        .insertAll(_handles!);
+    Overlay.of(
+      context,
+      rootOverlay: true,
+      debugRequiredFor: debugRequiredFor,
+    ).insertAll(_handles!);
   }
 
   /// Destroys the handles by removing them from overlay.
@@ -175,8 +172,12 @@ class MathSelectionOverlay {
   void showToolbar() {
     assert(_toolbar == null);
     _toolbar = OverlayEntry(builder: _buildToolbar);
-    Overlay.of(context, rootOverlay: true, debugRequiredFor: debugRequiredFor)!
-        .insert(_toolbar!);
+    Overlay.of(
+      context,
+      rootOverlay: true,
+      debugRequiredFor: debugRequiredFor,
+    ).insert(_toolbar!);
+
     _toolbarController.forward(from: 0.0);
   }
 
@@ -275,16 +276,13 @@ class MathSelectionOverlay {
 
     final editingRegion = manager.getLocalEditingRegion();
 
-    final isMultiline = false; // TODO
     // endpoints.last.point.dy - endpoints.first.point.dy >
     // manager.preferredLineHeight / 2;
 
     // If the selected text spans more than 1 line, horizontally center the
     // toolbar.
     // Derived from both iOS and Android.
-    final midX = isMultiline
-        ? editingRegion.width / 2
-        : (endpoint1.dx + endpoint2.dx) / 2;
+    final midX = (endpoint1.dx + endpoint2.dx) / 2;
 
     final midpoint = Offset(
       midX,

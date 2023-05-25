@@ -1,9 +1,6 @@
 include: package:flutter/analysis_options_user.yaml
 
 analyzer:
-  strong-mode:
-    implicit-casts: false
-    implicit-dynamic: false
   exclude:
     - lib/**.freezed.dart
 linter:
@@ -37,7 +34,6 @@ linter:
     - prefer_iterable_whereType
     - prefer_function_declarations_over_variables
     - unnecessary_lambdas
-    - prefer_equal_for_default_values
     - #avoid_init_to_null
     - unnecessary_getters_setters
     # - unnecessary_getters
